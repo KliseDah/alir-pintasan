@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alir</title>
+<meta name="theme-color" content="#2747C9">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="ikon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+  // Halaman perantara: hanya logo + pengalih ke aplikasi Alir. Tidak menyimpan data apa pun.
+  var APP = 'https://script.google.com/macros/s/AKfycby2rh_IZlsaiF76LCo7OwM97VTN0RwYsLbfS5yRbAQAY1Ga14OS4JhI3Mo8x6kvkoZW3g/exec';
+  var dariPintasan = /[?&]buka=1/.test(location.search) ||
+    matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: minimal-ui)').matches;
+  if (dariPintasan) location.replace(APP);
+</script>
+<style>
+  :root{--biru:#2747C9;--kuning:#FFC23D}
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--biru);color:#fff;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;text-align:center}
+  img{width:120px;height:120px;filter:drop-shadow(0 16px 32px rgba(5,12,50,.4))}
+  h1{margin:20px 0 4px;font-size:44px;letter-spacing:-.03em}
+  h1 span{color:var(--kuning)}
+  p{margin:0;opacity:.85;max-width:340px}
+  a.buka{display:inline-block;margin:28px 0 22px;padding:14px 32px;border-radius:16px;background:var(--kuning);color:#141B2D;font-weight:700;text-decoration:none}
+  small{opacity:.7;max-width:340px;display:block}
+</style>
+</head>
+<body>
+<main>
+  <img src="ikon-512.png" alt="Logo Alir">
+  <h1>alir<span>.</span></h1>
+  <p>Pencatat keuangan pribadi</p>
+  <a class="buka" id="buka" href="#">Buka Alir</a>
+  <small>Pasang di HP: ketuk menu ⋮ di Chrome, lalu pilih <b>Tambahkan ke layar utama</b> atau <b>Instal aplikasi</b>.</small>
+</main>
+<script>document.getElementById('buka').href = APP;</script>
+</body>
+</html>
