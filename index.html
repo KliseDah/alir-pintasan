@@ -14,7 +14,12 @@
   var APP = 'https://script.google.com/macros/s/AKfycby2rh_IZlsaiF76LCo7OwM97VTN0RwYsLbfS5yRbAQAY1Ga14OS4JhI3Mo8x6kvkoZW3g/exec';
   var dariPintasan = /[?&]buka=1/.test(location.search) ||
     matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: minimal-ui)').matches;
-  if (dariPintasan) location.replace(APP);
+  // Dari pintasan: Alir ditampilkan DI DALAM halaman ini (bingkai), supaya Chrome tidak memunculkan bar alamat
+  // script.google.com. Data tetap langsung dari Google ke HP, halaman ini tidak pernah melihatnya.
+  // ?langsung=1 = cara lama (pindah ke alamat Google), cadangan kalau bingkai bermasalah.
+  var langsung = /[?&]langsung=1/.test(location.search);
+  if (dariPintasan && langsung) location.replace(APP);
+  var bingkai = dariPintasan && !langsung;
 </script>
 <style>
   :root{--biru:#2747C9;--kuning:#FFC23D}
@@ -27,6 +32,8 @@
   p{margin:0;opacity:.85;max-width:340px}
   a.buka{display:inline-block;margin:28px 0 22px;padding:14px 32px;border-radius:16px;background:var(--kuning);color:#141B2D;font-weight:700;text-decoration:none}
   small{opacity:.7;max-width:340px;display:block}
+  iframe.alir{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:transparent}
+  small a{color:#fff}
 </style>
 </head>
 <body>
@@ -37,6 +44,18 @@
   <a class="buka" id="buka" href="#">Buka Alir</a>
   <small>Pasang di HP: ketuk menu ⋮ di Chrome, lalu pilih <b>Tambahkan ke layar utama</b> atau <b>Instal aplikasi</b>.</small>
 </main>
-<script>document.getElementById('buka').href = APP;</script>
+<script>
+  document.getElementById('buka').href = APP;
+  if (bingkai) {
+    // Logo di belakang tetap terlihat selama Alir dimuat; kalau bingkai gagal, ada jalan keluar ke cara lama
+    document.querySelector('main p').textContent = 'Membuka Alir…';
+    document.querySelector('main small').innerHTML = 'Lama tidak muncul? <a href="?langsung=1">Buka langsung</a>';
+    document.getElementById('buka').style.display = 'none';
+    var f = document.createElement('iframe');
+    f.className = 'alir'; f.src = APP; f.title = 'Alir';
+    f.allow = 'clipboard-write; web-share';
+    document.body.appendChild(f);
+  }
+</script>
 </body>
 </html>
