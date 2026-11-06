@@ -51,7 +51,8 @@
   <small>Pasang di HP: ketuk menu ⋮ di Chrome, lalu pilih <b>Tambahkan ke layar utama</b> atau <b>Instal aplikasi</b>.</small>
 </main>
 <script>
-  document.getElementById('buka').href = APP;
+  // Tombol juga membuka mode bingkai (tanpa pita Google); kalau bingkai pernah gagal di perangkat ini, ?buka=1 otomatis pakai cara lama
+  document.getElementById('buka').href = '?buka=1';
   if (bingkai) {
     // Logo di belakang tetap terlihat selama Alir dimuat; kalau bingkai gagal, ada jalan keluar ke cara lama
     document.querySelector('main p').textContent = 'Membuka Alir…';
