@@ -62,15 +62,17 @@
     f.className = 'alir'; f.src = APP; f.title = 'Alir';
     f.allow = 'clipboard-write; web-share';
     document.body.appendChild(f);
-    // Bingkai baru ditampilkan setelah Alir mengabari "alir-siap". Kalau tidak ada kabar dalam 12 detik
-    // (halaman putih / login Google ditolak di bingkai), pindah ke cara lama dan ingat untuk lain kali.
-    var siap = false;
+    // Bingkai baru ditampilkan setelah Alir mengabari "alir-siap". Kalau bingkai BELUM PERNAH berhasil di perangkat ini
+    // dan tidak ada kabar dalam 20 detik (halaman putih / login Google ditolak di bingkai), pindah ke cara lama dan ingat.
+    // Kalau sudah pernah berhasil, lambat = server Google baru bangun (mis. sesudah versi baru dipasang): tetap menunggu,
+    // tautan "Buka langsung" tetap ada. (Dulu 12 detik lalu langsung diingat gagal → pita Google muncul lagi selamanya.)
+    var siap = false, pernahOk = baca('alir-bingkai') === 'ok';
     addEventListener('message', function (e) {
       if (e.data === 'alir-siap' && /(^https:\/\/script\.google\.com$)|-script\.googleusercontent\.com$/.test(e.origin)) {
         siap = true; f.classList.add('siap'); ingat('alir-bingkai', 'ok');
       }
     });
-    setTimeout(function () { if (!siap) { ingat('alir-bingkai', 'gagal'); location.replace(APP); } }, 12000);
+    if (!pernahOk) setTimeout(function () { if (!siap) { ingat('alir-bingkai', 'gagal'); location.replace(APP); } }, 20000);
   }
 </script>
 </body>
