@@ -27,19 +27,22 @@
   var bingkai = dariPintasan && !langsung;
 </script>
 <style>
-  :root{--biru:#2747C9;--kuning:#FFC23D}
+  /* Latar terang + logo biru, sama dengan layar pembuka di dalam Alir (opsi B dev/mockup-pembuka-pintasan.html, 7 Nov 2026);
+     dulu latar biru membuat logo biru nyaru. Mode gelap HP → latar gelap Alir. */
+  :root{--biru:#2747C9;--kuning:#FFC23D;--bg:#F2F5FA;--tinta:#141B2D;--tinta-2:#6B7489;--bayang:rgba(39,71,201,.25)}
+  @media (prefers-color-scheme:dark){:root{--bg:#0D121D;--tinta:#E9EDF6;--tinta-2:#98A2B8;--bayang:rgba(0,0,0,.5)}}
   *{box-sizing:border-box}
-  html,body{margin:0;min-height:100%;background:var(--biru);color:#fff;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--tinta);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
   main{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;text-align:center}
-  img{width:120px;height:120px;filter:drop-shadow(0 16px 32px rgba(5,12,50,.4))}
+  img{width:120px;height:120px;filter:drop-shadow(0 14px 28px var(--bayang))}
   h1{margin:20px 0 4px;font-size:44px;letter-spacing:-.03em}
   h1 span{color:var(--kuning)}
-  p{margin:0;opacity:.85;max-width:340px}
+  p{margin:0;color:var(--tinta-2);max-width:340px}
   a.buka{display:inline-block;margin:28px 0 22px;padding:14px 32px;border-radius:16px;background:var(--kuning);color:#141B2D;font-weight:700;text-decoration:none}
-  small{opacity:.7;max-width:340px;display:block}
+  small{color:var(--tinta-2);font-size:13px;max-width:340px;display:block}
   iframe.alir{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:transparent;visibility:hidden}
   iframe.alir.siap{visibility:visible}
-  small a{color:#fff}
+  small a{color:var(--tinta-2)}
 </style>
 </head>
 <body>
