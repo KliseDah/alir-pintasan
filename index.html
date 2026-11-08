@@ -46,12 +46,13 @@
   iframe.alir.siap{visibility:visible}
   small a{color:var(--tinta-2)}
   /* Mode bingkai (dibuka dari ikon): tampil persis seperti layar pembuka Android (manifest background_color biru + ikon maskable),
-     jadi dua layar terasa satu. Selalu biru, tidak ikut mode gelap. Ukuran logo diukur dari screenshot HP pemilik 8 Nov 2026
-     (logo ±33,6% lebar layar, tengah layar penuh = ±10px di atas tengah halaman karena status bar). */
+     jadi terasa satu layar. Selalu biru, tidak ikut mode gelap. Diukur dari rekaman layar HP pemilik 8 Nov 2026: urutannya layar
+     pembuka Android (logo kecil ±24% lebar) → layar pembuka Chrome (logo besar: garis+titik ±36% lebar, ikon-512 di latar biru)
+     → halaman ini. Disamakan dengan yang terakhir (Chrome): svg 50,2vw, tengah layar penuh = ±10px di atas tengah halaman. */
   .logo-splash{display:none}
   html.bingkai,html.bingkai body{background:#2747C9}
   html.bingkai main>*{display:none}
-  html.bingkai .logo-splash{display:block;position:fixed;left:50%;top:50%;width:min(33.6vw,160px);height:auto;transform:translate(-50%,calc(-50% - 10px))}
+  html.bingkai .logo-splash{display:block;position:fixed;left:50%;top:50%;width:min(50.2vw,240px);height:auto;transform:translate(-50%,calc(-50% - 10px))}
   html.bingkai main small{display:block;position:fixed;left:16px;right:16px;bottom:28px;max-width:none;margin:0;color:rgba(255,255,255,.75);opacity:0;transition:opacity .4s}
   html.bingkai main small.tampil{opacity:1}
   html.bingkai main small a{color:#fff}
