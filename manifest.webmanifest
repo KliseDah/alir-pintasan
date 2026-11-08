@@ -5,7 +5,7 @@
   "start_url": "./?buka=1",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#F2F5FA",
+  "background_color": "#2747C9",
   "theme_color": "#2747C9",
   "icons": [
     { "src": "ikon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

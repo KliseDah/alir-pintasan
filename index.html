@@ -25,6 +25,8 @@
   var langsung = /[?&]langsung=1/.test(location.search) || baca('alir-bingkai') === 'gagal';
   if (dariPintasan && langsung) location.replace(APP);
   var bingkai = dariPintasan && !langsung;
+  // Mode bingkai = sambungan layar pembuka Android (8 Nov 2026, pilihan pemilik): biru polos + logo tanpa kotak di posisi yang sama
+  if (bingkai) document.documentElement.classList.add('bingkai');
 </script>
 <style>
   /* Latar terang + logo biru, sama dengan layar pembuka di dalam Alir (opsi B dev/mockup-pembuka-pintasan.html, 7 Nov 2026);
@@ -43,10 +45,21 @@
   iframe.alir{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:transparent;visibility:hidden}
   iframe.alir.siap{visibility:visible}
   small a{color:var(--tinta-2)}
+  /* Mode bingkai (dibuka dari ikon): tampil persis seperti layar pembuka Android (manifest background_color biru + ikon maskable),
+     jadi dua layar terasa satu. Selalu biru, tidak ikut mode gelap. Ukuran logo diukur dari screenshot HP pemilik 8 Nov 2026
+     (logo ±33,6% lebar layar, tengah layar penuh = ±10px di atas tengah halaman karena status bar). */
+  .logo-splash{display:none}
+  html.bingkai,html.bingkai body{background:#2747C9}
+  html.bingkai main>*{display:none}
+  html.bingkai .logo-splash{display:block;position:fixed;left:50%;top:50%;width:min(33.6vw,160px);height:auto;transform:translate(-50%,calc(-50% - 10px))}
+  html.bingkai main small{display:block;position:fixed;left:16px;right:16px;bottom:28px;max-width:none;margin:0;color:rgba(255,255,255,.75);opacity:0;transition:opacity .4s}
+  html.bingkai main small.tampil{opacity:1}
+  html.bingkai main small a{color:#fff}
 </style>
 </head>
 <body>
 <main>
+  <svg class="logo-splash" viewBox="0 0 64 64" aria-label="Alir"><g fill="#FFFFFF" fill-opacity=".26"><rect x="13" y="40" width="7" height="12" rx="2"/><rect x="24" y="35" width="7" height="17" rx="2"/><rect x="35" y="38" width="7" height="14" rx="2"/><rect x="46" y="28" width="7" height="24" rx="2"/></g><path d="M12 35 24.5 25 33 31 44 19" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="13.5" r="5.5" fill="#FFC23D"/></svg>
   <img src="ikon-512.png" alt="Logo Alir">
   <h1>alir<span>.</span></h1>
   <p>Pencatat keuangan pribadi</p>
@@ -59,7 +72,9 @@
   if (bingkai) {
     // Logo di belakang tetap terlihat selama Alir dimuat; kalau bingkai gagal, ada jalan keluar ke cara lama
     document.querySelector('main p').textContent = 'Membuka Alir…';
-    document.querySelector('main small').innerHTML = 'Lama tidak muncul? <a href="?langsung=1">Buka langsung</a>';
+    var kecil = document.querySelector('main small');
+    kecil.innerHTML = 'Lama tidak muncul? <a href="?langsung=1">Buka langsung</a>';
+    setTimeout(function () { kecil.classList.add('tampil'); }, 6000);   // jalan keluar baru muncul kalau memang lama
     document.getElementById('buka').style.display = 'none';
     var f = document.createElement('iframe');
     f.className = 'alir'; f.src = APP; f.title = 'Alir';
